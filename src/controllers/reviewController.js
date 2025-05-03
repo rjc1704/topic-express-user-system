@@ -6,7 +6,7 @@ const reviewController = express.Router();
 
 // TODO: 인증된 사용자만 리뷰 생성 가능하도록 수정
 reviewController.post("/", async (req, res, next) => {
-  const { userId } = req.user;
+  const { userId } = req.auth;
   try {
     const createdReview = await reviewService.create({
       ...req.body,
