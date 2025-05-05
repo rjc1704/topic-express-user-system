@@ -13,8 +13,6 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// TODO: passport 초기화 및 session 설정 추가
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -22,6 +20,8 @@ app.use(
     saveUninitialized: false,
   }),
 );
+
+// TODO: passport 초기화 및 session 설정 추가
 
 app.use("", userController);
 app.use("/products", productController);
