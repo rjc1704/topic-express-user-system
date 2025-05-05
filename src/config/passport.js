@@ -4,6 +4,8 @@ import userRepository from "../repositories/userRepository.js";
 
 passport.use(localStrategy);
 
+// TODO: jwtStrategy 를 passport 에 등록하세요
+
 // 세션 저장 시 req.session 에 user.id 값을 할당합니다.
 passport.serializeUser((user, done) => {
   done(null, user.id); // req.session.passport.user = user.id

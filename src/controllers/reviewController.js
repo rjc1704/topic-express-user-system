@@ -4,7 +4,6 @@ import reviewService from "../services/reviewService.js";
 import auth from "../middlewares/auth.js";
 const reviewController = express.Router();
 
-// TODO: 인증된 사용자만 리뷰 생성 가능하도록 수정
 reviewController.post("/", auth.verifyAccessToken, async (req, res, next) => {
   const { userId } = req.auth;
   try {
@@ -37,8 +36,8 @@ reviewController.get("/", async (req, res, next) => {
   }
 });
 
-// TODO: 인증된 사용자만 리뷰 수정 가능하도록 수정
-// TODO: 리뷰 작성자만 수정 가능하도록 수정
+// TODO: auth.verifyAccessToken 대신 passport.authenticate 를 사용하세요
+// auth.verifyReviewAuth 내부를 확인하고 passport 인증방식에 따라 변경해야할 부분을 찾아 수정하세요
 reviewController.put(
   "/:id",
   auth.verifyAccessToken,
@@ -53,8 +52,6 @@ reviewController.put(
   },
 );
 
-// TODO: 인증된 사용자만 리뷰 삭제 가능하도록 수정
-// TODO: 리뷰 작성자만 삭제 가능하도록 수정
 reviewController.delete(
   "/:id",
   auth.verifyAccessToken,
