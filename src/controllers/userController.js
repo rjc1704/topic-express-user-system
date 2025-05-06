@@ -80,9 +80,8 @@ userController.get(
   "/auth/google/callback",
   passport.authenticate("google"),
   (req, res, next) => {
-    const { id } = req.user;
-    const accessToken = userService.createToken(id);
-    const refreshToken = userService.createToken(id, "refresh");
+    const accessToken = userService.createToken(req.user);
+    const refreshToken = userService.createToken(req.user, "refresh");
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       sameSite: "none",
@@ -97,7 +96,25 @@ userController.get(
   passport.authenticate("google", { scope: ["profile", "email"] }),
 );
 
-// TODO: GET /auth/kakao/callback 엔드포인트 추가.
+userController.get(
+  "/auth/kakao/callback",
+  passport.authenticate("kakao"),
+  (req, res, next) => {
+    const accessToken = userService.createToken(req.user);
+    const refreshToken = userService.createToken(req.user, "refresh");
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
+    return res.json({ accessToken });
+  },
+);
 
-// TODO: GET /auth/kakao 엔드포인트 추가.
+userController.get(
+  "/auth/kakao",
+  passport.authenticate("kakao", {
+    scope: ["profile_nickname", "account_email"],
+  }),
+);
 export default userController;
