@@ -76,17 +76,24 @@ userController.post(
   },
 );
 
-// TODO: 구글로그인 성공 시 토큰 발급 처리 하세요
 userController.get(
   "/auth/google/callback",
   passport.authenticate("google"),
   (req, res, next) => {
-    // 구글로그인 성공 시 accessToken 과 refreshToken 을 발급합니다.
-    // 발급된 refreshToken 은 쿠키에 저장합니다.
-    // 발급된 accessToken 을 클라이언트에 응답합니다. 응답형식: { accessToken: 'accessToken' }
+    const { id } = req.user;
+    const accessToken = userService.createToken(id);
+    const refreshToken = userService.createToken(id, "refresh");
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
+    return res.json({ accessToken });
   },
 );
 
-// TODO: GET /auth/google 엔드포인트를 만드세요
-
+userController.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] }),
+);
 export default userController;

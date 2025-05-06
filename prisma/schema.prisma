@@ -13,13 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// TODO: provider, providerId 추가
 model User {
   id           Int      @id @default(autoincrement())
   email        String   @unique
   name         String?
   password     String?
   refreshToken String?
+  provider     String   @default("local")
+  providerId   String?  @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   reviews      Review[]
