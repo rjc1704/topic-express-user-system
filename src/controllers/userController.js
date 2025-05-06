@@ -118,8 +118,26 @@ userController.get(
   }),
 );
 
-// TODO: GET /auth/naver/callback 엔드포인트 추가.
+userController.get(
+  "/auth/naver/callback",
+  passport.authenticate("naver"),
+  (req, res, next) => {
+    const accessToken = userService.createToken(req.user);
+    const refreshToken = userService.createToken(req.user, "refresh");
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
+    return res.json({ accessToken });
+  },
+);
 
-// TODO: GET /auth/naver 엔드포인트 추가.
+userController.get(
+  "/auth/naver",
+  passport.authenticate("naver", {
+    scope: ["nickname", "email"],
+  }),
+);
 
 export default userController;
