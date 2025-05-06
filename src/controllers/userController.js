@@ -80,9 +80,8 @@ userController.get(
   "/auth/google/callback",
   passport.authenticate("google"),
   (req, res, next) => {
-    const { id } = req.user;
-    const accessToken = userService.createToken(id);
-    const refreshToken = userService.createToken(id, "refresh");
+    const accessToken = userService.createToken(req.user);
+    const refreshToken = userService.createToken(req.user, "refresh");
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       sameSite: "none",

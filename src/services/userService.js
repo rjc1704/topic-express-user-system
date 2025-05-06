@@ -103,13 +103,27 @@ async function getUserById(id) {
 }
 
 async function oauthCreateOrUpdate(provider, providerId, email, name) {
-  const user = await userRepository.createOrUpdate(
-    provider,
-    providerId,
-    email,
-    name,
-  );
-  return filterSensitiveUserData(user);
+  // 1. email로 먼저 유저를 찾는다
+  const existingUser = await userRepository.findByEmail(email);
+
+  if (existingUser) {
+    // 이미 있으면 provider, providerId, name만 업데이트
+    const updatedUser = await userRepository.update(existingUser.id, {
+      provider,
+      providerId,
+      name,
+    });
+    return filterSensitiveUserData(updatedUser);
+  } else {
+    // 없으면 새로 생성
+    const createdUser = await userRepository.save({
+      provider,
+      providerId,
+      email,
+      name,
+    });
+    return filterSensitiveUserData(createdUser);
+  }
 }
 
 export default {
