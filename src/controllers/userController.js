@@ -96,4 +96,8 @@ userController.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] }),
 );
+
+// TODO: GET /auth/kakao/callback 엔드포인트 추가.
+
+// TODO: GET /auth/kakao 엔드포인트 추가.
 export default userController;
