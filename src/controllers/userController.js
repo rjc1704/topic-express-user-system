@@ -117,4 +117,9 @@ userController.get(
     scope: ["profile_nickname", "account_email"],
   }),
 );
+
+// TODO: GET /auth/naver/callback 엔드포인트 추가.
+
+// TODO: GET /auth/naver 엔드포인트 추가.
+
 export default userController;
