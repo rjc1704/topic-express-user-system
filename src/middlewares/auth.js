@@ -58,6 +58,7 @@ function validateEmailAndPassword(req, res, next) {
     error.code = 422;
     throw error;
   }
+  next();
 }
 export default {
   verifySessionLogin,
