@@ -8,7 +8,7 @@ userController.post("/users", async (req, res, next) => {
     const { email, name, password } = req.body;
     if (!email || !name || !password) {
       const error = new Error("email, name, password 가 모두 필요합니다.");
-      error.code = 422;
+      error.code = 400;
       throw error;
     }
     const user = await userService.createUser({ email, name, password });
@@ -23,7 +23,7 @@ userController.post("/login", async (req, res, next) => {
   try {
     if (!email || !password) {
       const error = new Error("email, password 가 모두 필요합니다.");
-      error.code = 422;
+      error.code = 400;
       throw error;
     }
     const user = await userService.getUser(email, password);
@@ -39,7 +39,7 @@ userController.post("/session-login", async (req, res, next) => {
   try {
     if (!email || !password) {
       const error = new Error("email, password 가 모두 필요합니다.");
-      error.code = 422;
+      error.code = 400;
       throw error;
     }
     const user = await userService.getUser(email, password);
