@@ -1,8 +1,8 @@
 import express from "express";
 
-const userController = express.Router();
+const userRouter = express.Router();
 
-userController.post("/users", async (req, res, next) => {
+userRouter.post("/users", async (req, res, next) => {
   try {
     // 1. 요청 바디에서 회원가입시 필요한 각 항목들 추출
     // 2. 각 속성이 없으면 400 코드와 "속성1,속성2,속성3 가 모두 필요합니다." 에러메시지로 에러 발생
@@ -13,4 +13,4 @@ userController.post("/users", async (req, res, next) => {
     next(error);
   }
 });
-export default userController;
+export default userRouter;
