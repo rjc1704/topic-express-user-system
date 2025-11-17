@@ -3,9 +3,9 @@ import userService from "../services/userService.js";
 import auth from "../middlewares/auth.js";
 import passport from "../config/passport.js";
 
-const userController = express.Router();
+const userRouter = express.Router();
 
-userController.post("/users", async (req, res, next) => {
+userRouter.post("/users", async (req, res, next) => {
   try {
     const { email, name, password } = req.body;
     if (!email || !name || !password) {
@@ -20,7 +20,7 @@ userController.post("/users", async (req, res, next) => {
   }
 });
 
-userController.post("/login", async (req, res, next) => {
+userRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     if (!email || !password) {
@@ -44,7 +44,7 @@ userController.post("/login", async (req, res, next) => {
   }
 });
 
-userController.post(
+userRouter.post(
   "/session-login",
   auth.validateEmailAndPassword,
   passport.authenticate("local"),
@@ -53,7 +53,7 @@ userController.post(
   },
 );
 
-userController.post(
+userRouter.post(
   "/token/refresh",
   passport.authenticate("refresh-token", { session: false }),
   async (req, res, next) => {
@@ -76,7 +76,7 @@ userController.post(
   },
 );
 
-userController.get(
+userRouter.get(
   "/auth/google/callback",
   passport.authenticate("google"),
   (req, res, next) => {
@@ -91,12 +91,12 @@ userController.get(
   },
 );
 
-userController.get(
+userRouter.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] }),
 );
 
-userController.get(
+userRouter.get(
   "/auth/kakao/callback",
   passport.authenticate("kakao"),
   (req, res, next) => {
@@ -111,7 +111,7 @@ userController.get(
   },
 );
 
-userController.get(
+userRouter.get(
   "/auth/kakao",
   passport.authenticate("kakao", {
     scope: ["profile_nickname", "account_email"],
@@ -122,4 +122,4 @@ userController.get(
 
 // TODO: GET /auth/naver 엔드포인트 추가.
 
-export default userController;
+export default userRouter;
