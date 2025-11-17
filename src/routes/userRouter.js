@@ -1,9 +1,9 @@
 import express from "express";
 import userService from "../services/userService.js";
 
-const userController = express.Router();
+const userRouter = express.Router();
 
-userController.post("/users", async (req, res, next) => {
+userRouter.post("/users", async (req, res, next) => {
   try {
     const { email, name, password } = req.body;
     if (!email || !name || !password) {
@@ -18,7 +18,7 @@ userController.post("/users", async (req, res, next) => {
   }
 });
 
-userController.post("/login", async (req, res, next) => {
+userRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     if (!email || !password) {
@@ -35,4 +35,4 @@ userController.post("/login", async (req, res, next) => {
 
 // TODO: 세션 로그인 Endpoint 구현
 
-export default userController;
+export default userRouter;
