@@ -1,9 +1,9 @@
 import express from "express";
 import userService from "../services/userService.js";
 
-const userController = express.Router();
+const userRouter = express.Router();
 
-userController.post("/users", async (req, res, next) => {
+userRouter.post("/users", async (req, res, next) => {
   try {
     const { email, name, password } = req.body;
     if (!email || !name || !password) {
@@ -19,7 +19,7 @@ userController.post("/users", async (req, res, next) => {
 });
 
 // TODO: 로그인 Endpoint 구현
-userController.post("/login", async (req, res, next) => {
+userRouter.post("/login", async (req, res, next) => {
   try {
     // 1. 요청 바디에서 로그인시 필요한 email, password 추출
     // 2. 각 속성이 없으면 400 코드와 "email, password 가 모두 필요합니다." 에러메시지로 에러 발생
@@ -31,4 +31,4 @@ userController.post("/login", async (req, res, next) => {
   }
 });
 
-export default userController;
+export default userRouter;

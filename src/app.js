@@ -2,10 +2,10 @@ import "dotenv/config";
 import express from "express";
 import cookieParser from "cookie-parser";
 
-import userController from "./controllers/userController.js";
+import userRouter from "./routes/userRouter.js";
 
-import productController from "./controllers/productController.js";
-import reviewController from "./controllers/reviewController.js";
+import productRouter from "./routes/productRouter.js";
+import reviewRouter from "./routes/reviewRouter.js";
 import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
@@ -13,9 +13,9 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("", userController);
-app.use("/products", productController);
-app.use("/reviews", reviewController);
+app.use("", userRouter);
+app.use("/products", productRouter);
+app.use("/reviews", reviewRouter);
 
 app.use(errorHandler);
 
