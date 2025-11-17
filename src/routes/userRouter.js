@@ -3,9 +3,9 @@ import userService from "../services/userService.js";
 import auth from "../middlewares/auth.js";
 import passport from "../config/passport.js";
 
-const userController = express.Router();
+const userRouter = express.Router();
 
-userController.post("/users", async (req, res, next) => {
+userRouter.post("/users", async (req, res, next) => {
   try {
     const { email, name, password } = req.body;
     if (!email || !name || !password) {
@@ -20,7 +20,7 @@ userController.post("/users", async (req, res, next) => {
   }
 });
 
-userController.post("/login", async (req, res, next) => {
+userRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     if (!email || !password) {
@@ -45,7 +45,7 @@ userController.post("/login", async (req, res, next) => {
 });
 
 // TODO: passport local strategy 를 이용해서 로그인 처리하도록 리팩터링 하세요
-userController.post(
+userRouter.post(
   "/session-login",
   auth.validateEmailAndPassword,
   passport.authenticate("local"),
@@ -54,7 +54,7 @@ userController.post(
   },
 );
 
-userController.post(
+userRouter.post(
   "/token/refresh",
   auth.verifyRefreshToken,
   async (req, res, next) => {
@@ -76,4 +76,4 @@ userController.post(
   },
 );
 
-export default userController;
+export default userRouter;

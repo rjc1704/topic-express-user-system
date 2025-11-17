@@ -2,9 +2,9 @@ import express from "express";
 
 import reviewService from "../services/reviewService.js";
 import auth from "../middlewares/auth.js";
-const reviewController = express.Router();
+const reviewRouter = express.Router();
 
-reviewController.post("/", auth.verifyAccessToken, async (req, res, next) => {
+reviewRouter.post("/", auth.verifyAccessToken, async (req, res, next) => {
   const { userId } = req.auth;
   try {
     const createdReview = await reviewService.create({
@@ -17,7 +17,7 @@ reviewController.post("/", auth.verifyAccessToken, async (req, res, next) => {
   }
 });
 
-reviewController.get("/:id", async (req, res, next) => {
+reviewRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
     const review = await reviewService.getById(id);
@@ -27,7 +27,7 @@ reviewController.get("/:id", async (req, res, next) => {
   }
 });
 
-reviewController.get("/", async (req, res, next) => {
+reviewRouter.get("/", async (req, res, next) => {
   try {
     const reviews = await reviewService.getAll();
     return res.json(reviews);
@@ -38,7 +38,7 @@ reviewController.get("/", async (req, res, next) => {
 
 // TODO: auth.verifyAccessToken 대신 passport.authenticate 를 사용하세요
 // auth.verifyReviewAuth 내부를 확인하고 passport 인증방식에 따라 변경해야할 부분을 찾아 수정하세요
-reviewController.put(
+reviewRouter.put(
   "/:id",
   auth.verifyAccessToken,
   auth.verifyReviewAuth,
@@ -52,7 +52,7 @@ reviewController.put(
   },
 );
 
-reviewController.delete(
+reviewRouter.delete(
   "/:id",
   auth.verifyAccessToken,
   auth.verifyReviewAuth,
@@ -66,4 +66,4 @@ reviewController.delete(
   },
 );
 
-export default reviewController;
+export default reviewRouter;
