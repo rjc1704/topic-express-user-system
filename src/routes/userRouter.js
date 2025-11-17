@@ -3,9 +3,9 @@ import userService from "../services/userService.js";
 import auth from "../middlewares/auth.js";
 import passport from "../config/passport.js";
 
-const userController = express.Router();
+const userRouter = express.Router();
 
-userController.post("/users", async (req, res, next) => {
+userRouter.post("/users", async (req, res, next) => {
   try {
     const { email, name, password } = req.body;
     if (!email || !name || !password) {
@@ -20,7 +20,7 @@ userController.post("/users", async (req, res, next) => {
   }
 });
 
-userController.post("/login", async (req, res, next) => {
+userRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     if (!email || !password) {
@@ -44,7 +44,7 @@ userController.post("/login", async (req, res, next) => {
   }
 });
 
-userController.post(
+userRouter.post(
   "/session-login",
   auth.validateEmailAndPassword,
   passport.authenticate("local"),
@@ -53,7 +53,7 @@ userController.post(
   },
 );
 
-userController.post(
+userRouter.post(
   "/token/refresh",
   passport.authenticate("refresh-token", { session: false }),
   async (req, res, next) => {
@@ -77,7 +77,7 @@ userController.post(
 );
 
 // TODO: 구글로그인 성공 시 토큰 발급 처리 하세요
-userController.get(
+userRouter.get(
   "/auth/google/callback",
   passport.authenticate("google"),
   (req, res, next) => {
@@ -89,4 +89,4 @@ userController.get(
 
 // TODO: GET /auth/google 엔드포인트를 만드세요
 
-export default userController;
+export default userRouter;
