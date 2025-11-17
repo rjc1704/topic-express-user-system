@@ -2,18 +2,18 @@ import express from "express";
 
 import productService from "../services/productService.js";
 
-const productController = express.Router();
+const productRouter = express.Router();
 
 // TODO: 로그인 여부를 확인하는 미들웨어를 적용함으로써 인가 처리 해보세요
-productController.post("/", async (req, res, next) => {
+productRouter.post("/", async (req, res, next) => {
   const createdProduct = await productService.create(req.body);
   return res.json(createdProduct);
 });
 
-productController.get("/:id", async (req, res) => {
+productRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
   const product = await productService.getById(id);
   return res.json(product);
 });
 
-export default productController;
+export default productRouter;
