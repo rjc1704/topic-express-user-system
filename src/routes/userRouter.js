@@ -88,6 +88,8 @@ userRouter.get(
       secure: true,
     });
     return res.json({ accessToken });
+    // 실제 프로젝트에서는 프론트엔드 URL을 사용하여 아래와 같이 route handler로 리다이렉트 처리
+    // res.redirect(`${process.env.FRONTEND_URL}/api/auth/callback?token=${accessToken}`);
   },
 );
 
